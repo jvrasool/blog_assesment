@@ -14,6 +14,7 @@ Please follow the instructions below to complete the tasks and showcase your pro
    - Navigate to the project directory and run the following command to install the required gems:
      ```
      bundle install
+     yarn install
      ```
 
 3. **Database Setup:**
