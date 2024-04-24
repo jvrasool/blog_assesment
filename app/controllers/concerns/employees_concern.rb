@@ -14,7 +14,7 @@ module EmployeesConcern
   end
 
   def get_employee_uri
-    URI("https://dummy-employees-api-8bad748cda19.herokuapp.com/employees/#{params[:id]}")
+    URI("#{Constants::HEROKU_APP_URL}/#{params[:id]}")
   end
 
   def create_employee_api(uri)
