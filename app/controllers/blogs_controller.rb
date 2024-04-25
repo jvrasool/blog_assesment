@@ -60,20 +60,21 @@ class BlogsController < ApplicationController
       format.json { head :no_content }
     end
   end
-
   def import
-    file = params[:attachment]
-    data = CSV.parse(file.to_io, headers: true, encoding: 'utf8')
-    # Start code to handle CSV data
-    ActiveRecord::Base.transaction do
-      data.each do |row|
+    begin
+      file = params[:attachment]
+
+      # Optimize memory usage by processing CSV in chunks
+      CSV.foreach(file.to_io, headers: true, encoding: 'utf8') do |row|
         current_user.blogs.create!(row.to_h)
       end
+    rescue StandardError => e
+      Rails.logger.error e.message
     end
-    # End code to handle CSV data
+
     redirect_to blogs_path
   end
-
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_blog
