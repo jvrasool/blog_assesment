@@ -74,20 +74,7 @@ class BlogsController < ApplicationController
 
     redirect_to blogs_path
   end
-
-  def import1
-    file = params[:attachment]
-    data = CSV.parse(file.to_io, headers: true, encoding: 'utf8')
-    # Start code to handle CSV data
-    ActiveRecord::Base.transaction do
-      data.each do |row|
-        current_user.blogs.create!(row.to_h)
-      end
-    end
-    # End code to handle CSV data
-    redirect_to blogs_path
-  end
-
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_blog
